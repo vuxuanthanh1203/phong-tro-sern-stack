@@ -25,7 +25,7 @@ export const registerService = ({ name, phone, password }) => new Promise(async 
             { expiresIn: '2d' }
         )
 
-        console.log(result);
+        // console.log(result);
 
         resolve({
             err: token ? 0 : 2,
