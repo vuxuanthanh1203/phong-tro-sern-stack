@@ -5,7 +5,6 @@ require('dotenv').config()
 import initRouter from './src/routes'
 import connectDB from './src/config/connectDB'
 
-
 const app = express()
 
 app.use(cors({

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+import Swal from 'sweetalert2'
 
 import { InputForm, Button } from '../../components/index'
 
@@ -11,7 +12,7 @@ const Login = () => {
     const location = useLocation()
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const { isLoggedIn } = useSelector(state => state.auth)
+    const { isLoggedIn, msg, update } = useSelector(state => state.auth)
 
     const [isRegister, setIsRegister] = useState(location.state?.flag)
     const [invalidFields, setInvalidFields] = useState([])
@@ -21,14 +22,21 @@ const Login = () => {
         name: '',
     })
 
+    // Switch login - register
     useEffect(() => {
         setIsRegister(location.state?.flag)
     }, [location.state?.flag])
 
+    // Change page upon successful login
     useEffect(() => {
         isLoggedIn && navigate('/')
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isLoggedIn])
+
+    // popup when login failed
+    useEffect(() => {
+        msg && Swal.fire('Oop !', msg, 'error')
+    }, [msg, update])
 
     const handleSubmit = async () => {
         let finalPayload = isRegister ? payload : {
@@ -90,7 +98,7 @@ const Login = () => {
                         label={'Họ tên'}
                         value={payload.name}
                         setValue={setPayload}
-                        type={'name'} />
+                        classify={'name'} />
                 }
                 <InputForm
                     setInvalidFields={setInvalidFields}
@@ -98,14 +106,16 @@ const Login = () => {
                     label={'Số điện thoại'}
                     value={payload.phone}
                     setValue={setPayload}
-                    type={'phone'} />
+                    classify={'phone'} />
                 <InputForm
                     setInvalidFields={setInvalidFields}
                     invalidFields={invalidFields}
                     label={'Mật khẩu'}
                     value={payload.password}
                     setValue={setPayload}
-                    type={'password'} />
+                    classify={'password'}
+                    type='password'
+                />
                 <Button
                     text={isRegister ? 'Đăng ký' : 'Đăng Nhập'}
                     textColor='text-white'
