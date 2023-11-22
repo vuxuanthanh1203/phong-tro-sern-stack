@@ -18,7 +18,7 @@ export const insertService = () => new Promise(async (resolve, reject) => {
     try {
         dataBody.forEach(async (item) => {
             const postId = v4()
-            const labelCode = generateCode(4)
+            const labelCode = generateCode(item?.header?.class?.classType)
             const attributesId = v4()
             const userId = v4()
             const imagesId = v4()
@@ -26,12 +26,12 @@ export const insertService = () => new Promise(async (resolve, reject) => {
             await db.Post.create({
                 id: postId,
                 title: item?.header?.title,
-                star: item?.header?.star,
+                star: item.header?.star,
                 labelCode,
                 address: item?.header?.address,
                 attributesId,
                 categoryCode: 'NCT',
-                description: JSON.stringify(item?.header?.content),
+                description: JSON.stringify(item?.mainContent?.content),
                 userId,
                 overviewId,
                 imagesId
@@ -47,9 +47,12 @@ export const insertService = () => new Promise(async (resolve, reject) => {
                 id: imagesId,
                 image: JSON.stringify(item?.images)
             })
-            await db.Label.create({
-                code: labelCode,
-                value: item?.header?.class?.classType
+            await db.Label.findOrCreate({
+                where: { code: labelCode },
+                defaults: {
+                    code: labelCode,
+                    value: item?.header?.class?.classType
+                }
             })
             await db.Overview.create({
                 id: overviewId,
@@ -65,8 +68,8 @@ export const insertService = () => new Promise(async (resolve, reject) => {
                 id: userId,
                 name: item?.contact?.content?.find(i => i.name === "Liên hệ:")?.content,
                 password: hashPassword('123456'),
-                phone: item?.contact?.content?.find(i => i.name === "Liên hệ:")?.content,
-                zalo: item?.contact?.content?.find(i => i.name === "Liên hệ:")?.content,
+                phone: item?.contact?.content?.find(i => i.name === "Điện thoại:")?.content,
+                zalo: item?.contact?.content?.find(i => i.name === "Zalo:")?.content,
             })
         })
 

@@ -1,13 +1,13 @@
 import { Routes, Route } from 'react-router-dom';
 
 import { path } from './utils/constant';
-import { Home, HomePage, Login, RentalApartment, RentalHouse, RentalRoom, RentalSpace } from './containers/Public';
+import { Layout, HomePage, Login, RentalApartment, RentalHouse, RentalRoom, RentalSpace } from './containers/Public';
 
 function App() {
   return (
-    <div className="h-screen w-screen bg-primary">
+    <div className="h-full w-full bg-primary">
       <Routes>
-        <Route path={path.HOME} element={<Home />}>
+        <Route path={path.HOME} element={<Layout />}>
           <Route path='*' element={<HomePage />} />
           <Route path={path.LOGIN} element={<Login />} />
           <Route path={path.CHO_THUE_CAN_HO} element={<RentalApartment />} />

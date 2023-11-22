@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 
 import { apiGetCategory } from '../../services/category'
-import { convertToSlug } from '../../utils/constant'
+import { convertToSlug } from '../../utils/common/convertToSlug'
 
 const active = 'hover:bg-tertiary px-4 h-full flex items-center  bg-tertiary'
 const notActive = 'hover:bg-tertiary px-4 h-full flex items-center bg-secondary'
@@ -21,8 +21,8 @@ const Navigation = () => {
     }, [])
 
     return (
-        <div className='w-screen flex justify-center items-center  bg-secondary text-white'>
-            <div className='w-1100 h-[40px] flex items-center text-sm font-medium'>
+        <div className='w-full flex justify-center items-center  bg-secondary text-white'>
+            <div className='w-4/5 h-[40px] flex items-center text-sm font-medium'>
                 <NavLink
                     to={'/'}
                     className={({ isActive }) => isActive ? active : notActive}

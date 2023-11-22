@@ -2,18 +2,19 @@ import React from 'react'
 import { Outlet } from 'react-router-dom'
 
 import Header from './Header'
-import Navigation from './Navigation'
+import { Navigation, Search } from './index'
 
-const Home = () => {
+const Layout = () => {
     return (
         <div className="w-full flex flex-col items-center h-full">
             <Header />
             <Navigation />
-            <div className="w-1100 flex flex-col items-center justify-center mt-3">
+            <Search />
+            <div className="w-4/5 flex flex-col items-start justify-start mt-3">
                 <Outlet />
             </div>
         </div>
     )
 }
 
-export default Home
+export default Layout
