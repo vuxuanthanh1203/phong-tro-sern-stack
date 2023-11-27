@@ -9,5 +9,5 @@ export { default as RentalSpace } from './RentalSpace';
 export { default as HomePage } from './HomePage';
 export { default as Search } from './Search';
 export { default as ListPost } from './ListPost';
-
-
+export { default as Pagination } from './Pagination';
+export { default as PostDetail } from './PostDetail';

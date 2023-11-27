@@ -7,7 +7,7 @@ const initRouter = (app) => {
     app.use('/api/v1/auth', authRouter)
     app.use('/api/v1/insert', insertRouter)
     app.use('/api/v1/category', categoryRouter)
-    app.use('/api/v1/post', postRouter)
+    app.use('/api/v1/posts', postRouter)
 
 
     return app.use('/', (req, res) => {

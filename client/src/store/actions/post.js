@@ -1,10 +1,9 @@
 import actionTypes from "./actionTypes"
-import { apiGetPosts } from "../../services/post"
+import { apiGetPosts, apiGetLimitPosts } from "../../services/post"
 
 export const getPosts = () => async (dispatch) => {
     try {
         const response = await apiGetPosts()
-        // console.log(response.data.res);
         if (response?.data.err === 0) {
             dispatch({
                 type: actionTypes.GET_POSTS,
@@ -12,13 +11,36 @@ export const getPosts = () => async (dispatch) => {
             })
         } else {
             dispatch({
-                type: actionTypes.REGISTER_FAIL,
+                type: actionTypes.GET_POSTS,
                 msg: response.data.msg
             })
         }
     } catch (error) {
         dispatch({
             type: actionTypes.GET_POSTS,
+            posts: null
+        })
+    }
+}
+
+export const getLimitPosts = (page) => async (dispatch) => {
+    try {
+        const response = await apiGetLimitPosts(page)
+        if (response?.data.err === 0) {
+            dispatch({
+                type: actionTypes.GET_LIMIT_POSTS,
+                posts: response.data.res?.rows,
+                counts: response.data.res?.count
+            })
+        } else {
+            dispatch({
+                type: actionTypes.GET_LIMIT_POSTS,
+                msg: response.data.msg
+            })
+        }
+    } catch (error) {
+        dispatch({
+            type: actionTypes.GET_LIMIT_POSTS,
             posts: null
         })
     }

@@ -1,10 +1,14 @@
 import React from 'react'
+import { useSearchParams } from 'react-router-dom'
 
 import { text } from '../../utils/constant'
 import { Location } from '../../components'
-import ListPost from './ListPost'
+import { ListPost, Pagination } from './index'
+
 
 const HomePage = () => {
+    const [params] = useSearchParams()
+
     return (
         <div className='w-full flex flex-col gap-3'>
             <div className='flex flex-col items-center justify-center gap-2'>
@@ -14,7 +18,8 @@ const HomePage = () => {
             <Location />
             <div className='w-full flex gap-4'>
                 <div className='w-[70%]'>
-                    <ListPost />
+                    <ListPost page={params.get('page') || 1} />
+                    <Pagination page={params.get('page') || 1} />
                 </div>
                 <div className='w-[30%] bg-white'>
                     Sidebar
