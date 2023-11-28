@@ -25,8 +25,6 @@ export const registerService = ({ name, phone, password }) => new Promise(async 
             { expiresIn: '2d' }
         )
 
-        // console.log(result);
-
         resolve({
             err: token ? 0 : 2,
             msg: token ? "Register successfully !" : "Phone number already exists !!!",

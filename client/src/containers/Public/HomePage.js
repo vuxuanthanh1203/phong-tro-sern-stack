@@ -1,13 +1,23 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+
 
 import { text } from '../../utils/constant'
-import { Location } from '../../components'
+import { Location, SideBarItem } from '../../components'
 import { ListPost, Pagination } from './index'
+import * as actions from '../../store/actions'
 
 
 const HomePage = () => {
     const [params] = useSearchParams()
+    const { categories, prices, acreages } = useSelector(state => state.app)
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(actions.getPrices())
+        dispatch(actions.getAcreage())
+    }, [dispatch])
 
     return (
         <div className='w-full flex flex-col gap-3'>
@@ -21,8 +31,10 @@ const HomePage = () => {
                     <ListPost page={params.get('page') || 1} />
                     <Pagination page={params.get('page') || 1} />
                 </div>
-                <div className='w-[30%] bg-white'>
-                    Sidebar
+                <div className='w-[30%] flex flex-col gap-4 justify-start items-center'>
+                    <SideBarItem content={categories} title='Danh sách cho thuê' />
+                    <SideBarItem content={prices} twoColumn spliceAt={4} title='Xem theo giá' />
+                    <SideBarItem content={acreages} twoColumn spliceAt={3} title='Xem theo diện tích' />
                 </div>
             </div>
         </div>

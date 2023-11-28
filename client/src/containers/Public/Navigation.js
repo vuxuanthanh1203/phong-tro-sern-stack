@@ -1,23 +1,19 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 
-import { apiGetCategory } from '../../services/category'
 import { convertToSlug } from '../../utils/common/convertToSlug'
+import * as actions from '../../store/actions'
 
 const active = 'hover:bg-tertiary px-4 h-full flex items-center  bg-tertiary'
 const notActive = 'hover:bg-tertiary px-4 h-full flex items-center bg-secondary'
 
 const Navigation = () => {
-
-    const [categories, setCategory] = useState([])
+    // const [categories, setCategory] = useState([])
+    const dispatch = useDispatch()
+    const { categories } = useSelector(state => state.app)
     useEffect(() => {
-        const fetchCategory = async () => {
-            const res = await apiGetCategory()
-            if (res?.data.err === 0) {
-                setCategory(res.data.response)
-            }
-        }
-        fetchCategory()
+        dispatch(actions.getCategories())
     }, [])
 
     return (

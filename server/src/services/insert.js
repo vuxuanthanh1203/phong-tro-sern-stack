@@ -7,10 +7,13 @@ import choThueCanHo from '../../data/chothuecanho.json'
 import choThueMatBang from '../../data/chothuematbang.json'
 import choThuePhongTro from '../../data/chothuephongtro.json'
 import nhaChoThue from '../../data/nhachothue.json'
+import { dataPrice, dataAcreage } from '../ultis/insertData'
+import { getNumberFromString } from '../ultis/common'
+
 
 import generateCode from '../ultis/generateCode'
 
-const dataBody = nhaChoThue.body
+const dataBody = choThuePhongTro.body
 
 const hashPassword = (password) => bcrypt.hashSync(password, 10)
 
@@ -23,6 +26,8 @@ export const insertService = () => new Promise(async (resolve, reject) => {
             const userId = v4()
             const imagesId = v4()
             const overviewId = v4()
+            const currentAcreage = getNumberFromString(item?.header?.attributes?.acreage)
+            const currentPrice = getNumberFromString(item?.header?.attributes?.price)
             await db.Post.create({
                 id: postId,
                 title: item?.header?.title,
@@ -34,7 +39,9 @@ export const insertService = () => new Promise(async (resolve, reject) => {
                 description: JSON.stringify(item?.mainContent?.content),
                 userId,
                 overviewId,
-                imagesId
+                imagesId,
+                acreageCode: dataAcreage.find(acreage => acreage.max > currentAcreage && acreage.min <= currentAcreage)?.code,
+                priceCode: dataPrice.find(price => price.max > currentPrice && price.min <= currentPrice)?.code,
             })
             await db.Attribute.create({
                 id: attributesId,
@@ -77,5 +84,27 @@ export const insertService = () => new Promise(async (resolve, reject) => {
 
     } catch (error) {
         reject(error)
+    }
+})
+
+export const createPricesAndAcreage = () => new Promise((resolve, reject) => {
+    try {
+        dataPrice.forEach(async (item, index) => {
+            await db.Price.create({
+                code: item.code,
+                value: item.value,
+                order: index + 1
+            })
+        })
+        dataAcreage.forEach(async (item, index) => {
+            await db.Acreage.create({
+                code: item.code,
+                value: item.value,
+                order: index + 1
+            })
+        })
+        resolve('OK')
+    } catch (err) {
+        reject(err)
     }
 })

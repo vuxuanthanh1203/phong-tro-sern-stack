@@ -1,5 +1,5 @@
 import React, { memo } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import { convertToSlug } from '../utils/common/convertToSlug'
 
@@ -9,12 +9,12 @@ const { IoIosStar } = icons
 const indexs = [0, 1, 2, 3]
 
 const ItemList = ({ address, attributes, images, description, title, user, postId }) => {
-    const navigate = useNavigate()
+    const url = `chi-tiet/${convertToSlug(title.replace('/', '-'))}/${postId}`
 
     return (
         <div className='w-full flex border-t border-orange-600 py-3'>
             <Link
-                to={`chi-tiet/${convertToSlug(title.replace('/', '-'))}/${postId}`}
+                to={url}
                 className='w-2/5 flex flex-wrap gap-[2px] items-center relative cursor-pointer'
             >
                 {images.length > 0 && images.filter((i, index) => indexs.some(i => i === index))?.map((i, index) => {
@@ -32,7 +32,7 @@ const ItemList = ({ address, attributes, images, description, title, user, postI
                         <IoIosStar className='star-icon' color='#ffd454' />
                         <IoIosStar className='star-icon' color='#ffd454' />
                         <IoIosStar className='star-icon' color='#ffd454' />
-                        <span className='ml-1'>{title}</span>
+                        <Link to={url} className='ml-1 hover:underline decoration-solid'>{title}</Link>
                     </div>
                 </div>
                 <div className='my-2 flex flex-col gap-3'>
