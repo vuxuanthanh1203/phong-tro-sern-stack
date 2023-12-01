@@ -1,19 +1,31 @@
 import React, { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useSearchParams } from 'react-router-dom'
 
 import { getLimitPosts } from '../../store/actions/post'
 
 import { Button, ItemList } from '../../components'
 
-const ListPost = ({ page }) => {
+const ListPost = () => {
     const dispatch = useDispatch()
+    const [searchParams] = useSearchParams()
     const { posts } = useSelector(state => state.post)
     const listRef = useRef()
 
     useEffect(() => {
-        dispatch(getLimitPosts(page))
         listRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    }, [page])
+
+        let params = []
+        for (let entry of searchParams.entries()) {
+            params.push(entry)
+        }
+
+        //convert arrParmas -> object || 'Object.fromEntries' chuyển đổi mảng các cặp giá trị thành obj
+        const searchParamsObj = Object.fromEntries(params || []);
+
+        dispatch(getLimitPosts(searchParamsObj))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [searchParams])
 
     return (
         <div ref={listRef} className='p-2 bg-white rounded-md border border-[#dedede] shadow-sm px-4'>

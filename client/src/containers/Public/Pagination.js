@@ -1,19 +1,27 @@
 import React, { useState, useEffect } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { PageNumber } from '../../components'
 
+import { PageNumber } from '../../components'
 import icons from '../../utils/icons'
 
 const { MdOutlineKeyboardDoubleArrowRight, MdOutlineKeyboardDoubleArrowLeft } = icons
 
 
-const Pagination = ({ page }) => {
+const Pagination = () => {
     const { counts } = useSelector(state => state.post)
+    const [params] = useSearchParams()
+
     const [arrPage, setArrPage] = useState([])
-    const [currentPage, setCurrentPage] = useState(+page)
+    const [currentPage, setCurrentPage] = useState(1)
     const [hideEndIcon, setHideEndIcon] = useState(false)
     const [hideStartIcon, setHideStartIcon] = useState(false)
 
+    useEffect(() => {
+        const page = params.get('page') * 1
+        page && page !== currentPage && setCurrentPage(page)
+        !page && setCurrentPage(1)
+    }, [currentPage, params])
 
     useEffect(() => {
         let maxPage = Math.ceil(counts / 5)

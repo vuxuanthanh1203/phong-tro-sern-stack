@@ -23,11 +23,21 @@ export const getPostsService = () => new Promise(async (resolve, reject) => {
     }
 })
 
-export const getLimitPostsService = (page) => new Promise(async (resolve, reject) => {
+export const getLimitPostsService = (params) => new Promise(async (resolve, reject) => {
     const limit = 5
-    let offset = page ? (page - 1) * limit : 0
+    let offset = params.page ? (params.page - 1) * limit : 0
+    let condition = {}
+
+    if (params.priceCode) {
+        condition.priceCode = params.priceCode;
+    } else if (params.acreageCode) {
+        condition.acreageCode = params.acreageCode;
+    }
+
+
     try {
         const res = await db.Post.findAndCountAll({
+            where: condition,
             raw: true,
             nest: true,
             include: [

@@ -11,3 +11,4 @@ export { default as Search } from './Search';
 export { default as ListPost } from './ListPost';
 export { default as Pagination } from './Pagination';
 export { default as PostDetail } from './PostDetail';
+export { default as ListSidebar } from './ListSidebar';

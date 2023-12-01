@@ -1,23 +1,21 @@
 import React, { useEffect } from 'react'
-import { useSearchParams } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 
 import { text } from '../../utils/constant'
-import { Location, SideBarItem } from '../../components'
-import { ListPost, Pagination } from './index'
+import { Location } from '../../components'
+import { ListPost, ListSidebar, Pagination } from './index'
 import * as actions from '../../store/actions'
 
 
 const HomePage = () => {
-    const [params] = useSearchParams()
-    const { categories, prices, acreages } = useSelector(state => state.app)
     const dispatch = useDispatch()
 
     useEffect(() => {
         dispatch(actions.getPrices())
         dispatch(actions.getAcreage())
-    }, [dispatch])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     return (
         <div className='w-full flex flex-col gap-3'>
@@ -28,14 +26,10 @@ const HomePage = () => {
             <Location />
             <div className='w-full flex gap-4'>
                 <div className='w-[70%]'>
-                    <ListPost page={params.get('page') || 1} />
-                    <Pagination page={params.get('page') || 1} />
+                    <ListPost />
+                    <Pagination />
                 </div>
-                <div className='w-[30%] flex flex-col gap-4 justify-start items-center'>
-                    <SideBarItem content={categories} title='Danh sách cho thuê' />
-                    <SideBarItem content={prices} twoColumn spliceAt={4} title='Xem theo giá' />
-                    <SideBarItem content={acreages} twoColumn spliceAt={3} title='Xem theo diện tích' />
-                </div>
+                <ListSidebar />
             </div>
         </div>
     )
