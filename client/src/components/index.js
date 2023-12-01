@@ -6,3 +6,5 @@ export { default as Location } from './Location';
 export { default as ItemList } from './ItemList';
 export { default as PageNumber } from './PageNumber';
 export { default as SideBarItem } from './SideBarItem';
+export { default as Contact } from './Contact';
+export { default as Intro } from './Intro';

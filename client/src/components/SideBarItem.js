@@ -8,7 +8,7 @@ import icons from '../utils/icons'
 
 const { MdOutlineNavigateNext } = icons
 
-const ItemSidebar = ({ title, content, twoColumn, type }) => {
+const SideBarItem = ({ title, content, twoColumn, type }) => {
     // const dispatch = useDispatch()
     const location = useLocation()
     const navigate = useNavigate()
@@ -80,4 +80,4 @@ const ItemSidebar = ({ title, content, twoColumn, type }) => {
     )
 }
 
-export default memo(ItemSidebar)
+export default memo(SideBarItem)
