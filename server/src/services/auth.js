@@ -6,7 +6,7 @@ require('dotenv').config()
 
 const hashPassword = (password) => bcrypt.hashSync(password, 10)
 
-export const registerService = ({ name, phone, password }) => new Promise(async (resolve, reject) => {
+export const registerService = async ({ name, phone, password }) => {
 
     try {
         const result = await db.User.findOrCreate({
@@ -25,18 +25,18 @@ export const registerService = ({ name, phone, password }) => new Promise(async 
             { expiresIn: '2d' }
         )
 
-        resolve({
+        return {
             err: token ? 0 : 2,
             msg: token ? "Register successfully !" : "Phone number already exists !!!",
             token: token || null
-        })
+        }
 
     } catch (error) {
-        reject(error)
+        throw error
     }
-})
+}
 
-export const loginService = ({ phone, password }) => new Promise(async (resolve, reject) => {
+export const loginService = async ({ phone, password }) => {
 
     try {
         const result = await db.User.findOne({
@@ -52,13 +52,13 @@ export const loginService = ({ phone, password }) => new Promise(async (resolve,
             { expiresIn: '2d' }
         )
 
-        resolve({
+        return {
             err: token ? 0 : 2,
             msg: token ? "Login successfully !" : result ? "Wrong password !!!" : "Phone number is not registered !!!",
             token: token || null
-        })
+        }
 
     } catch (error) {
-        reject(error)
+        throw error
     }
-})
+}

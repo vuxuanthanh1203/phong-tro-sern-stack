@@ -1,21 +1,11 @@
-import React, { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import React from 'react'
 
 
 import { text } from '../../utils/constant'
 import { Location } from '../../components'
 import { ListPost, ListSidebar, Pagination } from './index'
-import * as actions from '../../store/actions'
-
 
 const HomePage = () => {
-    const dispatch = useDispatch()
-
-    useEffect(() => {
-        dispatch(actions.getPrices())
-        dispatch(actions.getAcreage())
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
 
     return (
         <div className='w-full flex flex-col gap-3'>

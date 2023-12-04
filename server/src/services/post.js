@@ -1,6 +1,7 @@
 import db from '../models'
+import { getFirstProperty } from '../ultis/getFirstProperty'
 
-export const getPostsService = () => new Promise(async (resolve, reject) => {
+export const getPostsService = async () => {
     try {
         const res = await db.Post.findAll({
             raw: true,
@@ -13,31 +14,23 @@ export const getPostsService = () => new Promise(async (resolve, reject) => {
             attributes: ['id', 'title', 'star', 'address', 'description']
         })
 
-        resolve({
+        return {
             err: res ? 0 : 1,
             msg: res ? 'OK' : 'Getting Post failed !',
             res
-        })
+        }
     } catch (error) {
-        reject(error)
+        throw error;
     }
-})
+}
 
-export const getLimitPostsService = (params) => new Promise(async (resolve, reject) => {
-    const limit = 5
-    let offset = params.page ? (params.page - 1) * limit : 0
-    let condition = {}
-
-    if (params.priceCode) {
-        condition.priceCode = params.priceCode;
-    } else if (params.acreageCode) {
-        condition.acreageCode = params.acreageCode;
-    }
-
+export const getLimitPostsService = async ({ page, ...params }) => {
+    const limit = 5;
+    const offset = page ? (page - 1) * limit : 0;
 
     try {
         const res = await db.Post.findAndCountAll({
-            where: condition,
+            where: params,
             raw: true,
             nest: true,
             include: [
@@ -48,19 +41,20 @@ export const getLimitPostsService = (params) => new Promise(async (resolve, reje
             attributes: ['id', 'title', 'star', 'address', 'description'],
             offset,
             limit
-        })
+        });
 
-        resolve({
+        return {
             err: res ? 0 : 1,
             msg: res ? 'OK' : 'Getting Post failed !',
             res
-        })
+        };
     } catch (error) {
-        reject(error)
+        throw error;
     }
-})
+};
 
-export const getNewPostsService = () => new Promise(async (resolve, reject) => {
+
+export const getNewPostsService = async () => {
 
     try {
         const res = await db.Post.findAll({
@@ -75,12 +69,12 @@ export const getNewPostsService = () => new Promise(async (resolve, reject) => {
             limit: 7
         })
 
-        resolve({
+        return {
             err: res ? 0 : 1,
             msg: res ? 'OK' : 'Getting Post failed !',
             res
-        })
+        }
     } catch (error) {
-        reject(error)
+        throw error;
     }
-})
+}

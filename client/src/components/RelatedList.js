@@ -10,6 +10,7 @@ const RelatedList = () => {
 
     useEffect(() => {
         dispatch(actions.getNewPosts())
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (

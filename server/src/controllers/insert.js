@@ -3,8 +3,8 @@ import * as insertService from '../services/insert'
 export const insert = async (req, res) => {
 
     try {
-        // const result = await insertService.insertService()
-        const result = await insertService.createPricesAndAcreage()
+        const result = await insertService.insertService()
+        // const result = await insertService.createPricesAndAcreage()
 
         return res.status(200).json(result)
 

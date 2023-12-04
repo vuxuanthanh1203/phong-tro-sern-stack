@@ -1,5 +1,5 @@
 import React, { memo } from 'react'
-import { createSearchParams, useNavigate, useSearchParams } from 'react-router-dom'
+import { createSearchParams, useNavigate, useSearchParams, useLocation } from 'react-router-dom'
 
 
 const notActive = 'w-10 h-10 flex items-center justify-center bg-white hover:bg-[#DDDDDD] rounded-md cursor-pointer'
@@ -7,6 +7,7 @@ const active = 'w-10 h-10 flex items-center justify-center bg-[#E13427] text-whi
 
 const PageNumber = ({ text, icon, currentPage, setCurrentPage }) => {
     const navigate = useNavigate()
+    const location = useLocation()
 
     const [searchParams] = useSearchParams()
     const entries = searchParams.entries()
@@ -16,6 +17,7 @@ const PageNumber = ({ text, icon, currentPage, setCurrentPage }) => {
         for (const entry of entries) {
             params.push(entry)
         }
+
         //convert arrParmas -> object || 'Object.fromEntries' chuyển đổi mảng các cặp giá trị thành obj
         const searchParamsObj = Object.fromEntries(params || []);
 
@@ -26,7 +28,7 @@ const PageNumber = ({ text, icon, currentPage, setCurrentPage }) => {
         if (!(text === '...')) {
             setCurrentPage(+text)
             navigate({
-                pathname: '/',
+                pathname: location.pathname,
                 search: createSearchParams(appToUrl(entries)).toString()
             })
         }

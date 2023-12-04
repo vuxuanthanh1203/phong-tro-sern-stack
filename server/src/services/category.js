@@ -1,18 +1,17 @@
 import db from '../models'
 
 // Get all category
-export const getCategoryService = () => new Promise(async (resolve, reject) => {
+export const getCategoryService = async () => {
     try {
         const response = await db.Category.findAll({
-            raw: true,
-            attributes: ['code', 'value']
+            raw: true
         })
-        resolve({
+        return {
             err: response ? 0 : 1,
             msg: response ? 'OK' : 'Failed to get category',
             response
-        })
+        }
     } catch (error) {
-        reject(error)
+        throw error
     }
-})
+}

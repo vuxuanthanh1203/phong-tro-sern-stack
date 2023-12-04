@@ -22,6 +22,7 @@ const Header = () => {
 
     const goLogin = useCallback((flag) => {
         navigate(path.LOGIN, { state: { flag } })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (

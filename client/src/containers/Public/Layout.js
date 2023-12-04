@@ -1,11 +1,23 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+
 import { Outlet } from 'react-router-dom'
 
 import Header from './Header'
 import { Navigation, Search } from './index'
 import { Contact, Intro } from '../../components'
+import * as actions from '../../store/actions'
+
 
 const Layout = () => {
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(actions.getPrices())
+        dispatch(actions.getAcreage())
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
     return (
         <div className="w-full flex flex-col gap-6 items-center h-full">
             <Header />

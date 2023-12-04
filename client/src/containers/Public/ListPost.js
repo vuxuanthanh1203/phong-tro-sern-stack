@@ -6,7 +6,7 @@ import { getLimitPosts } from '../../store/actions/post'
 
 import { Button, ItemList } from '../../components'
 
-const ListPost = () => {
+const ListPost = ({ categoryCode }) => {
     const dispatch = useDispatch()
     const [searchParams] = useSearchParams()
     const { posts } = useSelector(state => state.post)
@@ -21,11 +21,14 @@ const ListPost = () => {
         }
 
         //convert arrParmas -> object || 'Object.fromEntries' chuyển đổi mảng các cặp giá trị thành obj
-        const searchParamsObj = Object.fromEntries(params || []);
+        let searchParamsObj = Object.fromEntries(params || []);
+        if (categoryCode) {
+            searchParamsObj = { categoryCode, ...searchParamsObj }
+        }
 
         dispatch(getLimitPosts(searchParamsObj))
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [searchParams])
+    }, [searchParams, categoryCode])
 
     return (
         <div ref={listRef} className='p-2 bg-white rounded-md border border-[#dedede] shadow-sm px-4'>

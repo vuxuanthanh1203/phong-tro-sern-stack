@@ -1,41 +1,41 @@
 import axiosConfig from '../axiosConfig'
 
-export const apiGetPosts = () => new Promise(async (resolve, reject) => {
+export const apiGetPosts = async () => {
     try {
         const response = await axiosConfig({
             method: 'get',
             url: '/api/v1/posts/all'
         })
-        resolve(response)
+        return response
 
     } catch (error) {
-        reject(error)
+        throw error
     }
-})
+}
 
-export const apiGetLimitPosts = (params) => new Promise(async (resolve, reject) => {
+export const apiGetLimitPosts = async (params) => {
     try {
         const response = await axiosConfig({
             method: 'get',
             url: `/api/v1/posts/post`,
             params: params
         })
-        resolve(response)
+        return response
 
     } catch (error) {
-        reject(error)
+        throw error
     }
-})
+}
 
-export const apiGetNewPosts = () => new Promise(async (resolve, reject) => {
+export const apiGetNewPosts = async () => {
     try {
         const response = await axiosConfig({
             method: 'get',
             url: '/api/v1/posts/new-posts'
         })
-        resolve(response)
+        return response
 
     } catch (error) {
-        reject(error)
+        throw error
     }
-})
+}

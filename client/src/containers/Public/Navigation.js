@@ -9,11 +9,12 @@ const active = 'hover:bg-tertiary px-4 h-full flex items-center  bg-tertiary'
 const notActive = 'hover:bg-tertiary px-4 h-full flex items-center bg-secondary'
 
 const Navigation = () => {
-    // const [categories, setCategory] = useState([])
     const dispatch = useDispatch()
     const { categories } = useSelector(state => state.app)
+
     useEffect(() => {
         dispatch(actions.getCategories())
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (

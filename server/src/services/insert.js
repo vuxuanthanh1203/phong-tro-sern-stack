@@ -13,11 +13,11 @@ import { getNumberFromString } from '../ultis/common'
 
 import generateCode from '../ultis/generateCode'
 
-const dataBody = choThuePhongTro.body
+const dataBody = nhaChoThue.body
 
 const hashPassword = (password) => bcrypt.hashSync(password, 10)
 
-export const insertService = () => new Promise(async (resolve, reject) => {
+export const insertService = () => {
     try {
         dataBody.forEach(async (item) => {
             const postId = v4()
@@ -80,14 +80,14 @@ export const insertService = () => new Promise(async (resolve, reject) => {
             })
         })
 
-        resolve('Insert data completed !')
+        return 'Insert data completed !'
 
     } catch (error) {
-        reject(error)
+        throw error
     }
-})
+}
 
-export const createPricesAndAcreage = () => new Promise((resolve, reject) => {
+export const createPricesAndAcreage = () => {
     try {
         dataPrice.forEach(async (item, index) => {
             await db.Price.create({
@@ -103,8 +103,8 @@ export const createPricesAndAcreage = () => new Promise((resolve, reject) => {
                 order: index + 1
             })
         })
-        resolve('OK')
+        return 'OK'
     } catch (err) {
-        reject(err)
+        throw error
     }
-})
+}
