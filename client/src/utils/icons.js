@@ -11,6 +11,7 @@ import { TbReportMoney } from "react-icons/tb";
 import { BiArea } from "react-icons/bi";
 import { FaRegBuilding } from "react-icons/fa";
 import { IoIosStar } from "react-icons/io";
+import { GrLinkPrevious } from "react-icons/gr";
 
 const icons = {
     AiOutlinePlusCircle,
@@ -26,7 +27,8 @@ const icons = {
     IoSearchSharp,
     IoIosStar,
     MdOutlineKeyboardDoubleArrowRight,
-    MdOutlineKeyboardDoubleArrowLeft
+    MdOutlineKeyboardDoubleArrowLeft,
+    GrLinkPrevious
 }
 
 export default icons;

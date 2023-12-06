@@ -13,6 +13,7 @@ const actionTypes = {
     GET_CATEGORIES: 'GET_CATEGORIES',
     GET_PRICE: 'GET_PRICE',
     GET_ACREAGE: 'GET_ACREAGE',
+    GET_PROVINCE: 'GET_PROVINCE',
 
 }
 

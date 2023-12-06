@@ -21,7 +21,8 @@ export const getCategories = () => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: actionTypes.GET_CATEGORIES,
-            categories: null
+            categories: null,
+            msg: error
         })
     }
 }
@@ -45,7 +46,8 @@ export const getPrices = () => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: actionTypes.GET_PRICE,
-            prices: null
+            prices: null,
+            msg: error
         })
     }
 }
@@ -69,7 +71,33 @@ export const getAcreage = () => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: actionTypes.GET_ACREAGE,
-            acreages: null
+            acreages: null,
+            msg: error
+        })
+    }
+}
+
+export const getProvince = () => async (dispatch) => {
+    try {
+        const response = await api.apiGetProvince()
+
+        if (response?.data.err === 0) {
+            dispatch({
+                type: actionTypes.GET_PROVINCE,
+                provinces: response.data.response
+            })
+        } else {
+            dispatch({
+                type: actionTypes.GET_PROVINCE,
+                msg: response.data.msg,
+                provinces: null
+            })
+        }
+    } catch (error) {
+        dispatch({
+            type: actionTypes.GET_PROVINCE,
+            provinces: null,
+            msg: error
         })
     }
 }

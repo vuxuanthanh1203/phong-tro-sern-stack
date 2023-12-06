@@ -15,6 +15,7 @@ const Layout = () => {
     useEffect(() => {
         dispatch(actions.getPrices())
         dispatch(actions.getAcreage())
+        dispatch(actions.getProvince())
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 

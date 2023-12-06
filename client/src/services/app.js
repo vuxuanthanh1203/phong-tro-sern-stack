@@ -25,3 +25,16 @@ export const apiGetAcreage = async () => {
         throw error
     }
 }
+
+export const apiGetProvince = async () => {
+    try {
+        const response = await axiosConfig({
+            method: 'get',
+            url: '/api/v1/province/all'
+        })
+        return response
+
+    } catch (error) {
+        throw error
+    }
+}
